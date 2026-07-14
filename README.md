@@ -21,30 +21,7 @@ The goal is to gain practical experience with SIEM, endpoint telemetry, threat d
 
 ## Lab Architecture
 
-```
-                 ┌──────────────────────────┐
-                 │      Windows A Host      │
-                 │                          │
-                 │  Splunk Enterprise       │
-                 │  Kali Linux VM           │
-                 └──────────┬───────────────┘
-                            │
-                 192.168.x.x│
-                            │
-                    Network │
-                            │
-                 ┌──────────▼───────────────┐
-                 │      Windows B           │
-                 │                          │
-                 │ Splunk Universal         │
-                 │ Forwarder                │
-                 │                          │
-                 │ Sysmon                   │
-                 │ Windows Event Logs       │
-                 └──────────────────────────┘
-```
-
----
+![Lab Architecture](diagrams/lab-architecture.png)
 
 # Technologies Used
 
