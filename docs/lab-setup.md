@@ -1,524 +1,252 @@
-# \# Splunk SOC Home Lab Setup
+# Splunk SOC Home Lab Setup
 
-# 
+## Overview
 
-# \## Overview
+This document describes the implementation of a small Security Operations Center (SOC) home lab using Splunk Enterprise, Sysmon, and Splunk Universal Forwarder. The lab is designed to simulate attack scenarios, collect endpoint telemetry, investigate security events, and perform incident response.
 
-# 
+---
 
-# This document describes the implementation of a small Security Operations Center (SOC) home lab using Splunk Enterprise, Sysmon, and Splunk Universal Forwarder. The lab is designed to simulate attack scenarios, collect endpoint telemetry, investigate security events, and perform incident response.
+# Lab Components
 
-# 
+## Windows A (Host)
 
-# \---
+**Role**
 
-# 
+- Splunk Enterprise Server
+- Oracle VirtualBox Host
 
-# \# Lab Components
+**Software Installed**
 
-# 
+- Windows 11
+- Splunk Enterprise
+- Oracle VirtualBox
 
-# \## Windows A (Host)
+**Responsibilities**
 
-# 
+- Receive logs from endpoints
+- Search and analyze events
+- Create alerts and dashboards
+- Perform investigations
 
-# Role:
+---
 
-# 
+## Kali Linux VM
 
-# \- Splunk Enterprise Server
+**Role**
 
-# \- Oracle VirtualBox Host
+Attacker Machine
 
-# 
+**Software**
 
-# Software Installed:
+- Kali Linux
+- Nmap
+- Metasploit Framework
+- OpenSSH Client
 
-# 
+**Responsibilities**
 
-# \- Windows 11
+- Simulate attacks
+- Network reconnaissance
+- Payload generation
+- Reverse shell listener
 
-# \- Splunk Enterprise
+---
 
-# \- Oracle VirtualBox
+## Windows B (Endpoint)
 
-# 
+**Role**
 
-# Responsibilities:
+Monitored Endpoint
 
-# 
+**Software**
 
-# \- Receive logs from endpoints
+- Windows 11
+- Sysmon
+- Splunk Universal Forwarder
 
-# \- Search and analyze events
+**Responsibilities**
 
-# \- Create alerts and dashboards
+- Generate endpoint telemetry
+- Collect Windows Event Logs
+- Forward logs to Splunk Enterprise
 
-# \- Perform investigations
+---
 
-# 
+# Network Configuration
 
-# \---
+**Local Network**
 
-# 
+```text
+Windows A (Splunk)
+        │
+        │
+192.168.31.x
+        │
+        │
+Windows B (Endpoint)
+```
 
-# \## Kali Linux VM
+**Communication**
 
-# 
+| Component | Port |
+|-----------|------|
+| Splunk Receiving | 9997 |
+| Splunk Web | 8000 |
+| SSH | 22 |
 
-# Role:
+---
 
-# 
+# Splunk Enterprise Configuration
 
-# Attacker Machine
+**Receiving Port**
 
-# 
+```text
+9997
+```
 
-# Software:
+**Enabled Event Sources**
 
-# 
+- Application
+- Security
+- System
+- Microsoft-Windows-Sysmon/Operational
+- Microsoft-Windows-PowerShell/Operational
 
-# \- Kali Linux
+---
 
-# \- Nmap
+# Splunk Universal Forwarder Configuration
 
-# \- Metasploit Framework
+**Forwarder sends logs to**
 
-# \- OpenSSH Client
+```text
+Windows A
+Port 9997
+```
 
-# 
+**Configuration Files**
+
+- outputs.conf
+- inputs.conf
 
-# Responsibilities:
+---
 
-# 
+# Sysmon Configuration
 
-# \- Simulate attacks
+**Installed Version**
 
-# \- Network reconnaissance
+```text
+Sysmon v15.x
+```
+
+**Configuration**
+
+```text
+sysmonconfig-export.xml
+```
+
+**Primary Event IDs Used**
 
-# \- Payload generation
-
-# \- Reverse shell listener
-
-# 
-
-# \---
-
-# 
-
-# \## Windows B (Endpoint)
-
-# 
-
-# Role:
-
-# 
-
-# Monitored Endpoint
-
-# 
-
-# Software:
-
-# 
-
-# \- Windows 11
-
-# \- Sysmon
-
-# \- Splunk Universal Forwarder
-
-# 
-
-# Responsibilities:
-
-# 
-
-# \- Generate endpoint telemetry
-
-# \- Collect Windows Event Logs
-
-# \- Forward logs to Splunk Enterprise
-
-# 
-
-# \---
-
-# 
-
-# \# Network Configuration
-
-# 
-
-# Local Network
-
-# 
-
-# ```
-
-# Windows A (Splunk)
-
-# &#x20;       │
-
-# &#x20;       │
-
-# 192.168.31.x
-
-# &#x20;       │
-
-# &#x20;       │
-
-# Windows B (Endpoint)
-
-# ```
-
-# 
-
-# Communication:
-
-# 
-
-# | Component | Port |
-
-# |----------|------|
-
-# | Splunk Receiving | 9997 |
-
-# | Splunk Web | 8000 |
-
-# | SSH | 22 |
-
-# 
-
-# \---
-
-# 
-
-# \# Splunk Enterprise Configuration
-
-# 
-
-# Receiving Port
-
-# 
-
-# ```
-
-# 9997
-
-# ```
-
-# 
-
-# Enabled Event Sources
-
-# 
-
-# \- Application
-
-# \- Security
-
-# \- System
-
-# \- Microsoft-Windows-Sysmon/Operational
-
-# \- Microsoft-Windows-PowerShell/Operational
-
-# 
-
-# \---
-
-# 
-
-# \# Splunk Universal Forwarder Configuration
-
-# 
-
-# Forwarder sends logs to:
-
-# 
-
-# ```
-
-# Windows A
-
-# Port 9997
-
-# ```
-
-# 
-
-# Configuration Files
-
-# 
-
-# \- outputs.conf
-
-# \- inputs.conf
-
-# 
-
-# \---
-
-# 
-
-# \# Sysmon Configuration
-
-# 
-
-# Installed Version
-
-# 
-
-# ```
-
-# Sysmon v15.x
-
-# ```
-
-# 
-
-# Configuration
-
-# 
-
-# ```
-
-# sysmonconfig-export.xml
-
-# ```
-
-# 
-
-# Primary Event IDs Used
-
-# 
-
-# | Event ID | Description |
-
-# |----------|-------------|
-
-# | 1 | Process Creation |
-
-# | 3 | Network Connection |
-
-# | 5 | Process Terminated |
-
-# | 11 | File Create |
-
-# 
-
-# \---
-
-# 
-
-# \# Attack Scenario
-
-# 
-
-# Completed
-
-# 
-
-# ✔ PowerShell Reverse Shell
-
-# 
-
-# Detection Sources
-
-# 
-
-# \- Sysmon
-
-# \- Windows Security Logs
-
-# \- PowerShell Operational Logs
-
-# 
-
-# Future Scenario
-
-# 
-
-# \- SSH Brute Force
-
-# 
-
-# \---
-
-# 
-
-# \# Log Flow
-
-# 
-
-# ```
-
-# Attack
-
-# 
-
-# ↓
-
-# 
-
-# Windows Endpoint
-
-# 
-
-# ↓
-
-# 
-
-# Sysmon
-
-# 
-
-# ↓
-
-# 
-
-# Windows Event Logs
-
-# 
-
-# ↓
-
-# 
-
-# Splunk Universal Forwarder
-
-# 
-
-# ↓
-
-# 
-
-# TCP 9997
-
-# 
-
-# ↓
-
-# 
-
-# Splunk Enterprise
-
-# 
-
-# ↓
-
-# 
-
-# Search
-
-# 
-
-# ↓
-
-# 
-
-# Alert
-
-# 
-
-# ↓
-
-# 
-
-# Investigation
-
-# 
-
-# ↓
-
-# 
-
-# Incident Response
-
-# ```
-
-# 
-
-# \---
-
-# 
-
-# \# Project Structure
-
-# 
-
-# ```
-
-# Splunk-Home-Lab/
-
-# 
-
-# configs/
-
-# docs/
-
-# attacks/
-
-# reports/
-
-# screenshots/
-
-# spl/
-
-# diagrams/
-
-# ```
-
-# 
-
-# \---
-
-# 
-
-# \# Skills Demonstrated
-
-# 
-
-# \- Splunk Enterprise Administration
-
-# \- SIEM Log Collection
-
-# \- Sysmon Deployment
-
-# \- Windows Event Log Monitoring
-
-# \- Endpoint Telemetry
-
-# \- SPL Query Development
-
-# \- Threat Detection
-
-# \- Incident Investigation
-
-# \- Incident Response
-
-# \- SOC Operations
-
-# 
-
-# \---
-
-# 
-
-# \# Future Improvements
-
-# 
-
-# \- SSH brute-force detection
-
-# \- Custom dashboards
-
-# \- Scheduled alerts
-
-# \- Additional attack simulations
-
-# \- Threat hunting use cases
-
-# \- Detection engineering
-
+| Event ID | Description |
+|-----------|-------------|
+| 1 | Process Creation |
+| 3 | Network Connection |
+| 5 | Process Terminated |
+| 11 | File Create |
+
+---
+
+# Attack Scenario
+
+## Completed
+
+✔ PowerShell Reverse Shell
+
+**Detection Sources**
+
+- Sysmon
+- Windows Security Logs
+- PowerShell Operational Logs
+
+## Future Scenario
+
+- SSH Brute Force
+
+---
+
+# Log Flow
+
+```text
+Attack
+        │
+        ▼
+Windows Endpoint
+        │
+        ▼
+Sysmon
+        │
+        ▼
+Windows Event Logs
+        │
+        ▼
+Splunk Universal Forwarder
+        │
+        ▼
+TCP 9997
+        │
+        ▼
+Splunk Enterprise
+        │
+        ▼
+Search
+        │
+        ▼
+Alert
+        │
+        ▼
+Investigation
+        │
+        ▼
+Incident Response
+```
+
+---
+
+# Project Structure
+
+```text
+Splunk-Home-Lab/
+│
+├── configs/
+├── docs/
+├── attacks/
+├── reports/
+├── screenshots/
+├── spl/
+└── diagrams/
+```
+
+---
+
+# Skills Demonstrated
+
+- Splunk Enterprise Administration
+- SIEM Log Collection
+- Sysmon Deployment
+- Windows Event Log Monitoring
+- Endpoint Telemetry
+- SPL Query Development
+- Threat Detection
+- Incident Investigation
+- Incident Response
+- SOC Operations
+
+---
+
+# Future Improvements
+
+- SSH brute-force detection
+- Custom dashboards
+- Scheduled alerts
+- Additional attack simulations
+- Threat hunting use cases
+- Detection engineering
