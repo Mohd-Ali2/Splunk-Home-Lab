@@ -58,7 +58,7 @@ Splunk-Home-Lab/
 # Attack Scenarios
 
 ## 1. PowerShell Reverse Shell
-
+![attack-simulation](Payload creation using msfvenom.png)
 
 ### Objective
 
