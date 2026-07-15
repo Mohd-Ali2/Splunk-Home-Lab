@@ -59,7 +59,6 @@ Splunk-Home-Lab/
 
 ## 1. PowerShell Reverse Shell
 
-Status: ✅ Completed
 
 ### Objective
 
