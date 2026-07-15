@@ -25,7 +25,7 @@ The goal is to gain practical experience with SIEM, endpoint telemetry, threat d
 
 # Technologies Used
 
-- ![splunk](https://www.readmecodegen.com/api/social-icon?name=splunk&reverseBackground=true)
+- Splunk
 - Splunk Universal Forwarder
 - Sysmon
 - Windows Event Logs
