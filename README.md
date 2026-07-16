@@ -72,7 +72,7 @@ Simulate a malicious PowerShell payload executed on the Windows endpoint.
 - Windows Security Logs
 
 ### Investigation
-
+![Investigation](./screenshots/windows-a/splunk/Splunk%20spl%203.png)
 - Search malicious PowerShell execution
 - Review command line
 - Identify parent process
