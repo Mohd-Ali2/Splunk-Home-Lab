@@ -65,6 +65,7 @@ Splunk-Home-Lab/
 Simulate a malicious PowerShell payload executed on the Windows endpoint.
 
 ### Detection
+![Detection](./screenshots/windows-a/splunk/Splunk%20Table%20Spl%204.png)
 
 - Sysmon Process Creation
 - PowerShell Operational Logs
