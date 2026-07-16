@@ -87,6 +87,7 @@ Simulate a malicious PowerShell payload executed on the Windows endpoint.
 - Verified clean system
 
 MITRE ATT&CK
+![MITRE-ATT&CK](./screenshots/windows-b/incident-response/Command-and-Scripting-T1059.001.png)
 
 - T1059.001 — PowerShell
 
