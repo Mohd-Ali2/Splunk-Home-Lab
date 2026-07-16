@@ -79,6 +79,7 @@ Simulate a malicious PowerShell payload executed on the Windows endpoint.
 - Correlate timestamps
 
 ### Incident Response
+![IR](./screenshots/windows-b/incident-response/Payload%20Deletion.png)
 
 - Isolated endpoint
 - Terminated malicious PowerShell process
