@@ -93,22 +93,6 @@ MITRE ATT&CK
 
 ---
 
-
-## 2. SSH Brute Force
-
-Status: 🚧 In Progress
-
-### Detection
-
-- Windows Security Event ID 4625
-- Sysmon Network Connections
-
-MITRE ATT&CK
-
-- T1110 — Brute Force
-
----
-
 # Screenshots
 
 Project screenshots are available inside:
