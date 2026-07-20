@@ -56,43 +56,6 @@ Splunk-Home-Lab/
 
 ---
 
-# Attack Scenarios
-
-## 1. PowerShell Reverse Shell
-![Payload creation using msfvenom](./screenshots/windows-a/attack-simulation/Payload-creation-using-msfvenom.png)
-
-### Objective
-
-Simulate a malicious PowerShell payload executed on the Windows endpoint.
-
-### Detection
-![Detection](./screenshots/windows-a/splunk/Splunk%20Table%20Spl%204.png)
-
-- Sysmon Process Creation
-- PowerShell Operational Logs
-- Windows Security Logs
-
-### Investigation
-![Investigation](./screenshots/windows-a/splunk/Splunk%20spl%203.png)
-- Search malicious PowerShell execution
-- Review command line
-- Identify parent process
-- Correlate timestamps
-
-### Incident Response
-![IR](./screenshots/windows-b/incident-response/Payload%20Deletion.png)
-
-- Isolated endpoint
-- Terminated malicious PowerShell process
-- Removed payload
-- Verified clean system
-
-MITRE ATT&CK
-![MITRE-ATT&CK](./screenshots/windows-b/incident-response/Command-and-Scripting-T1059.001.png)
-
-- T1059.001 — PowerShell
-
----
 
 # Screenshots
 
@@ -151,15 +114,6 @@ Contains detection queries used during the investigation.
 
 ---
 
-# Future Improvements
-
-- Additional attack simulations
-- Custom dashboards
-- Scheduled alerts
-- Detection rules
-- Threat hunting use cases
-
----
 
 # Author
 
