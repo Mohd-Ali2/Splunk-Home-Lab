@@ -22,7 +22,7 @@ The goal is to gain practical experience with SIEM, endpoint telemetry, threat d
 
 ## Lab Architecture
 
-![Lab Architecture](diagrams/lab-architecture.png)
+![Lab Architecture](diagrams/lab-architecture0.png)
 
 # Technologies Used
 
